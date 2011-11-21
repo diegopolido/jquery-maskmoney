@@ -36,6 +36,7 @@
 			symbolStay: false,
 			thousands: ',',
 			decimal: '.',
+			defaultDecimal: '.',
 			precision: 2,
 			defaultZero: true,
 			allowZero: false,
@@ -195,7 +196,11 @@
 
 			function maskValue(v) {
 				v = v.replace(settings.symbol,'');
-
+				//Fixing decimal size to mask correctly
+				var dn = v.substring(v.indexOf(settings.defaultDecimal) + 1).length;
+				for(var zp = dn; zp < settings.precision;  zp++) {
+					v += "0";
+				}
 				var strCheck = '0123456789';
 				var len = v.length;
 				var a = '', t = '', neg='';
